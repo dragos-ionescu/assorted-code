@@ -2,10 +2,10 @@ from enum import Enum, auto
 
 
 class State(Enum):
-    ANY = auto()
     START = auto()
     REJECT = auto()
     ACCEPT = auto()
+    ANY = auto()
 
 
 class DTM:
@@ -52,8 +52,9 @@ class DTM:
         except ValueError as ex:
             print(f"Error: {ex}")
 
+    @property
     def config(self) -> tuple:
         return (self.state, str(self), self.tape_index)
 
-    def __str__(self) -> str:
-        return "".join(self.tape)
+    def __repr__(self) -> str:
+        return repr(self.tape)

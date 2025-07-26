@@ -16,9 +16,72 @@ class DTMTests(unittest.TestCase):
         }
         for input, expected in test_cases:
             with self.subTest(input=input, expected=expected):
-                dtm = DTM.from_input(input)
+                dtm = DTM(input)
                 dtm.run(rules)
                 self.assertEqual(dtm.tape, expected)
+
+    # L = { a^n^2 | n natural number }
+    # ...for simplicity only L = {1, 4, 9}
+    def test_perfect_square(self):
+        class Extended(Enum):
+            SUB10 = auto()
+            SUB30 = auto()
+            SUB31 = auto()
+            SUB32 = auto()
+            SUB50 = auto()
+            SUB51 = auto()
+            SUB52 = auto()
+            SUB53 = auto()
+            SUB54 = auto()
+            REST = auto()
+
+        test_cases = [
+            ("", State.REJECT),
+            ("b", State.REJECT),
+            ("a", State.ACCEPT),
+            ("aa", State.REJECT),
+            ("aaa", State.REJECT),
+            ("aaaa", State.ACCEPT),
+            ("aaaaa", State.REJECT),
+            ("aaaaaa", State.REJECT),
+            ("aaaaaaa", State.REJECT),
+            ("aaaaaaaa", State.REJECT),
+            ("aaaaaaaaa", State.ACCEPT),
+            ("aaaaaaaaaa", State.REJECT),
+            ("aaaaaaaaaaa", State.REJECT),
+        ]
+        rules = {
+            (State.START, "a"): (Extended.SUB10, "a", -1),
+            (State.START, "*"): (State.REJECT, "*", +1),  # for empty of non 'a'
+            (Extended.SUB10, "a"): (Extended.SUB30, "x", +1),
+            (Extended.SUB10, "*"): (State.REJECT, "*", +1),
+            (Extended.SUB30, "a"): (Extended.SUB31, "x", +1),
+            (Extended.SUB30, ""): (State.ACCEPT, "", +1),
+            (Extended.SUB30, "*"): (State.REJECT, "*", +1),
+            (Extended.SUB31, "a"): (Extended.SUB32, "x", +1),
+            (Extended.SUB31, "*"): (State.REJECT, "*", +1),
+            (Extended.SUB32, "a"): (Extended.SUB50, "x", +1),
+            (Extended.SUB32, "*"): (State.REJECT, "*", +1),
+            (Extended.SUB50, "a"): (Extended.SUB51, "x", +1),
+            (Extended.SUB50, ""): (State.ACCEPT, "", +1),
+            (Extended.SUB50, "*"): (State.REJECT, "*", +1),
+            (Extended.SUB51, "a"): (Extended.SUB52, "x", +1),
+            (Extended.SUB51, "*"): (State.REJECT, "*", +1),
+            (Extended.SUB52, "a"): (Extended.SUB53, "x", +1),
+            (Extended.SUB52, "*"): (State.REJECT, "*", +1),
+            (Extended.SUB53, "a"): (Extended.SUB54, "x", +1),
+            (Extended.SUB53, "*"): (State.REJECT, "*", +1),
+            (Extended.SUB54, "a"): (Extended.REST, "x", +1),
+            (Extended.SUB54, "*"): (State.REJECT, "x", +1),
+            (Extended.REST, ""): (State.ACCEPT, "", +1),
+            (Extended.REST, "*"): (State.REJECT, "*", +1),
+        }
+        for input, expected in test_cases:
+            with self.subTest(input=input, expected=expected):
+                dtm = DTM(input)
+                dtm.run(rules)
+                state, cell, direction = dtm.config
+                self.assertEqual(state, expected)
 
     # L = { w#w | w in {0, 1}* }
     def test_two_strings_equal(self):
@@ -75,7 +138,7 @@ class DTMTests(unittest.TestCase):
         }
         for input, expected in test_cases:
             with self.subTest(input=input, expected=expected):
-                dtm = DTM.from_input(input)
+                dtm = DTM(input)
                 dtm.run(rules)
                 state, _, _ = dtm.config
                 self.assertEqual(state, expected)

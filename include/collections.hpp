@@ -1,5 +1,5 @@
-#ifndef LISTS_H
-#define LISTS_H
+#ifndef COLLECTIONS_HPP
+#define COLLECTIONS_HPP
 #include <string>
 
 class IntNode {
@@ -25,4 +25,5 @@ public:
     IntNode *get_list();
     friend std::ostream& operator<<(std::ostream& os, const IntLinkedList& list);
 };
-#endif
+
+#endif //COLLECTIONS_HPP

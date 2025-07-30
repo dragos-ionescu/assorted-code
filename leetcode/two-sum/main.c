@@ -1,4 +1,4 @@
-// https://leetcode.com/problems/two-sum/description/
+// https://leetcode.com/problems/two-sum/
 #include <stdio.h>
 #include <stdlib.h>
 #include "../../include/arrays.h"
@@ -10,7 +10,7 @@
  * Returns an allocated array of two indices if a pair is found;
  * otherwise, returns NULL.
  */
-int *twoSum_O2(int *nums, int numsSize, int target, int *returnSize) {
+int *twoSum_n2(int *nums, int numsSize, int target, int *returnSize) {
     int *solution = NULL;
     *returnSize = 0;
     for (int i = 0; i < numsSize; i++) {
@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 
     print_iar(numsSize, nums);
 
-    int *solution = twoSum_O2(nums, numsSize, target, returnSize);
+    int *solution = twoSum_n2(nums, numsSize, target, returnSize);
     print_iar(*returnSize, solution);
 
     return 0;

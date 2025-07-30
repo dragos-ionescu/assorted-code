@@ -1,6 +1,6 @@
 #include <iostream>
 #include <sstream>
-#include "../include/lists.h"
+#include "../include/collections.hpp"
 
 IntNode::IntNode() : val(0), next(nullptr) {}
 IntNode::IntNode(int val) : val(val), next(nullptr) {}

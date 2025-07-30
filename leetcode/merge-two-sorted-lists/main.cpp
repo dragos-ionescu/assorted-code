@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/merge-two-sorted-lists/
 #include <iostream>
-#include "../../include/lists.h"
+#include "../../include/collections.hpp"
 
 /**
  * Merges two sorted singly linked lists into a single sorted list.
@@ -10,7 +10,7 @@
  */
 class Solution {
 public:
-    static IntNode* mergeTwoLists_(IntNode* list1, IntNode* list2) {
+    static IntNode* mergeTwoLists(IntNode* list1, IntNode* list2) {
         auto *merged = new IntNode();
         auto *builder = merged;
 
